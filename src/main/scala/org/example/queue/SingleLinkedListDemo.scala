@@ -1,6 +1,7 @@
 package org.example.queue
 
 import util.control.Breaks._
+import java.util
 
 object SingleLinkedListDemo {
 
@@ -14,6 +15,11 @@ object SingleLinkedListDemo {
         println("修改2号数据: ")
         list.update(new LinkedNode(2, "bb"))
         list.list()
+
+        println("逆序打印：")
+        list.reversePrint()
+        println()
+
         list.delete(new LinkedNode(1, ""))
         println("删除一号数据: ")
         list.list()
@@ -29,6 +35,36 @@ class SingleLinkedList {
     // 创建头节点，指向链表头部
     val head = new LinkedNode(-1, "")
 
+    /**
+     * 使用栈，从尾到头打印单链表，同时不破坏链表本身的结构
+     * 1. 遍历 单向链表，将节点push到Stack中
+     * 2. 遍历 Stack，取出每个节点，输出信息
+     */
+    def reversePrint(): Unit = {
+        if (isEmpty()) {
+            println("链表空")
+            return
+        }
+        // 创建栈
+        val stack = new util.Stack[LinkedNode]()
+        var temp = head.next
+        // 遍历 单向链表，将节点push到Stack中
+        breakable {
+            while (true) {
+                stack.push(temp)
+                if (temp.next == null) {
+                    break()
+                }
+                temp = temp.next
+            }
+        }
+        // 遍历 Stack，取出每个节点，输出信息
+        while (!stack.empty()){
+            val node = stack.pop()
+            printf("编号：%d, 名称：%s\t -> ", node.no, node.name)
+        }
+    }
+
     def add(node: LinkedNode): Unit = {
         var temp = head
         // 找到链表的尾部
@@ -43,8 +79,8 @@ class SingleLinkedList {
         }
     }
 
-    def update(node:LinkedNode): Unit = {
-        if (isEmpty()){
+    def update(node: LinkedNode): Unit = {
+        if (isEmpty()) {
             println("链表为空，请添加数据")
             return
         }
@@ -55,7 +91,7 @@ class SingleLinkedList {
                     temp.name = node.name
                     break()
                 }
-                if (temp.next == null){
+                if (temp.next == null) {
                     break()
                 }
                 temp = temp.next
@@ -63,15 +99,15 @@ class SingleLinkedList {
         }
     }
 
-    def delete(node: LinkedNode):Unit = {
-        if (isEmpty()){
+    def delete(node: LinkedNode): Unit = {
+        if (isEmpty()) {
             println("链表为空，请添加数据")
             return
         }
         var temp = head
         breakable {
             while (true) {
-                if (temp.next == null){
+                if (temp.next == null) {
                     break()
                 }
                 if (temp.next.no == node.no) {
@@ -89,7 +125,7 @@ class SingleLinkedList {
     }
 
     def list(): Unit = {
-        if (isEmpty()){
+        if (isEmpty()) {
             println("链表为空，请添加数据")
             return
         }

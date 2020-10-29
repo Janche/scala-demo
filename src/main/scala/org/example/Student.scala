@@ -1,23 +1,36 @@
 package org.example
 
-import scala.collection.immutable
+class Student(a: Int, n: String) {
+    def this(age:Int, sal: Double){
+        this(age, "zhangsan")
+        this.sal = sal
+    }
 
-class Student {
+    var age:Int = a
+    var sal: Double = 20000.0
+    var name: String = n
 
+    override def toString: String = {
+        this.age + ", " + this.name + ", " + this.sal
+    }
 }
 
 object Student {
-    def apply(s: String): Student = new Student()
+//    def apply(s: String): Student = new Student()
 
     //    1 to 5
     //    val range = Range(1, 5)
     def main(args: Array[String]): Unit = {
-        test
+
+        val s1 = new Student(10, "lisi")
+        val s2 = new Student(10, 200)
+        println(s1.toString)
+        println(s2.toString)
     }
 
     def test: Unit = {
-        val student = Student("zhangsan")
-        println(student)
+//        val student = Student("zhangsan")
+//        println(student)
     }
 
     def test2: Unit = {
